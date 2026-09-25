@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZeroTrace Intel | SIH Hackathon Team</title>
+  <meta name="description" content="ZeroTrace Intel - SIH Hackathon Team site featuring project overview, timeline, team roster, and tech stack.">
+  
+  <!-- Google Fonts: Syne (Ultra Bold Display) & Plus Jakarta Sans (Modern Geometric Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="index.css">
+
+  <!-- CDN Script Loading: GSAP + ScrollTrigger, Motion, Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="header">
+    <div class="logo-tag">[ ZERO TRACE INTEL ]</div>
+    <div class="sih-tag">SIH 2026 // TEAM ID: #ZT-8092</div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-meta">
+        <span class="status-indicator"></span> SYSTEM STATUS: OPERATIONAL
+      </div>
+      <h1 class="hero-title" id="hero-title">ZERO TRACE INTEL</h1>
+      <p class="hero-subtitle">SMART INDIA HACKATHON 2026 // DEEP TECH & INTELLIGENCE ARCHITECTURE</p>
+
+      <!-- Tilted / Fanned Photo Strip of Real Team Photos -->
+      <div class="fanned-photo-strip">
+        <div class="photo-card card-1">
+          <img src="media_1790359057020.jpg" alt="ZeroTrace Intel - Lab Workstation">
+          <div class="card-overlay">
+            <span class="card-num">01</span>
+            <span class="card-name">LAB TEAM</span>
+          </div>
+        </div>
+        <div class="photo-card card-2">
+          <img src="media_1790359057161.jpg" alt="ZeroTrace Intel - SIH Hackathon Banner">
+          <div class="card-overlay">
+            <span class="card-num">02</span>
+            <span class="card-name">SIH 2026</span>
+          </div>
+        </div>
+        <div class="photo-card card-3">
+          <img src="media_1790359057233.jpg" alt="ZeroTrace Intel - Wide Lab Group">
+          <div class="card-overlay">
+            <span class="card-num">03</span>
+            <span class="card-name">SYSTEMS LAB</span>
+          </div>
+        </div>
+        <div class="photo-card card-4">
+          <img src="media_1790359057357.jpg" alt="ZeroTrace Intel - 3-Person Laptop Huddle">
+          <div class="card-overlay">
+            <span class="card-num">04</span>
+            <span class="card-name">DEV SPRINT</span>
+          </div>
+        </div>
+        <div class="photo-card card-5">
+          <img src="media_1790359057403.jpg" alt="ZeroTrace Intel - 5-Person Laptop Review">
+          <div class="card-overlay">
+            <span class="card-num">05</span>
+            <span class="card-name">CODE REVIEW</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PROBLEM SECTION -->
+    <section class="section" id="problem">
+      <div class="section-label">// 01. THE PROBLEM</div>
+      <h2 class="section-heading">MANUAL SIGNAL INTERPRETATION</h2>
+      <div class="content-block">
+        <p class="lead-text">
+          Terrestrial signal captures hold valuable communication parameters, but pulling them out today means multiple manual DSP steps and expert interpretation, one at a time.
+        </p>
+      </div>
+    </section>
+
+    <!-- WHAT WE'RE BUILDING SECTION -->
+    <section class="section" id="building">
+      <div class="section-label">// 02. WHAT WE'RE BUILDING</div>
+      <h2 class="section-heading">DSP-FIRST ANALYSIS PIPELINE</h2>
+      <div class="content-block">
+        <p class="lead-text">
+          ZeroTrace Intel automates first-level analysis of captured terrestrial signals through a single DSP-first pipeline — from raw WAV, IQ, or SigMF input straight to signal type, modulation, frequency, and confidence-scored parameters.
+        </p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (PINNED PIPELINE SECTION) -->
+    <section class="section pipeline-section" id="how-it-works">
+      <div class="section-label">// 03. ANALYSIS ENGINE</div>
+      <h2 class="section-heading">HOW IT WORKS // 7-STEP DSP PIPELINE</h2>
+
+      <div class="pipeline-container">
+        <div class="pipeline-step step-1">
+          <span class="step-num">01</span>
+          <div class="step-details">
+            <h3 class="step-title">RAW SIGNAL INGESTION</h3>
+            <p class="step-desc">Accepting binary WAV, IQ streams, or SigMF metadata format directly from terrestrial capture hardware.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-2">
+          <span class="step-num">02</span>
+          <div class="step-details">
+            <h3 class="step-title">PRE-FILTERING & NOISE CANCELLATION</h3>
+            <p class="step-desc">Applying bandpass filtering and spectral subtraction to isolate true carrier channels from ambient floor noise.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-3">
+          <span class="step-num">03</span>
+          <div class="step-details">
+            <h3 class="step-title">FFT & SPECTRAL FREQUENCY DETECTION</h3>
+            <p class="step-desc">Computing fast Fourier transforms to pinpoint center frequency peaks, bandwidth, and spectral density.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-4">
+          <span class="step-num">04</span>
+          <div class="step-details">
+            <h3 class="step-title">AUTOMATED MODULATION RECOGNITION</h3>
+            <p class="step-desc">Classifying signal modulation (AM, FM, PSK, QAM, FSK) using SciPy feature extraction.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-5">
+          <span class="step-num">05</span>
+          <div class="step-details">
+            <h3 class="step-title">SYMBOL RATE & TIMING RECOVERY</h3>
+            <p class="step-desc">Extracting baud rate and synchronization clock offsets from baseband phase transitions.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-6">
+          <span class="step-num">06</span>
+          <div class="step-details">
+            <h3 class="step-title">CONFIDENCE SCORING ENGINE</h3>
+            <p class="step-desc">Evaluating parameter probability metrics and flag anomalies against benchmarked signal profiles.</p>
+          </div>
+        </div>
+        <div class="pipeline-step step-7">
+          <span class="step-num">07</span>
+          <div class="step-details">
+            <h3 class="step-title">TELEMETRY & DASHBOARD DISPATCH</h3>
+            <p class="step-desc">Streaming structured SigMF metadata and parameter output directly to the ZeroTrace visual dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="section" id="team">
+      <div class="section-label">// 04. CORE ROSTER</div>
+      <h2 class="section-heading">TEAM OPERATIVES</h2>
+      
+      <div class="team-grid">
+        <div class="team-member-item">
+          <div class="member-photo-wrapper">
+            <img src="aryan_lead.jpg" alt="Aryan Kumar Srivastava">
+            <span class="member-id">OP-01</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">ARYAN KUMAR SRIVASTAVA</h3>
+            <div class="member-role">TEAM LEADER // BACKEND</div>
+          </div>
+        </div>
+
+        <div class="team-member-item">
+          <div class="member-photo-wrapper">
+            <img src="satya.jpg" alt="Satya Krishna Singh">
+            <span class="member-id">OP-02</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">SATYA KRISHNA SINGH</h3>
+            <div class="member-role">DSP ENGINEER</div>
+          </div>
+        </div>
+
+        <div class="team-member-item">
+          <div class="member-photo-wrapper">
+            <img src="rajan.jpg" alt="Rajan Chaudhary">
+            <span class="member-id">OP-03</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">RAJAN CHAUDHARY</h3>
+            <div class="member-role">DSP ENGINEER</div>
+          </div>
+        </div>
+
+        <div class="team-member-item">
+          <div class="member-photo-wrapper">
+            <img src="shantanu.jpg" alt="Shantanu Bajpai">
+            <span class="member-id">OP-04</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">SHANTANU BAJPAI</h3>
+            <div class="member-role">BACKEND ENGINEER</div>
+          </div>
+        </div>
+
+        <div class="team-member-item">
+          <div class="member-photo-wrapper">
+            <img src="sahil.jpg" alt="Sahil Bansal">
+            <span class="member-id">OP-05</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">SAHIL BANSAL</h3>
+            <div class="member-role">UI & DOCUMENTATION</div>
+          </div>
+        </div>
+
+        <div class="team-member-item">
+          <div class="member-photo-wrapper placeholder-avatar">
+            <div class="avatar-circle">SC</div>
+            <span class="member-id">OP-06</span>
+          </div>
+          <div class="member-info">
+            <h3 class="member-name">SALONI CHAURASIA</h3>
+            <div class="member-role">UI & DOCUMENTATION</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK SECTION -->
+    <section class="section" id="tech">
+      <div class="section-label">// 05. SYSTEM ARCHITECTURE</div>
+      <h2 class="section-heading">TECH STACK</h2>
+
+      <div class="tech-grid">
+        <div class="tech-item">
+          <span class="tech-category">CORE LANGUAGE</span>
+          <span class="tech-name">PYTHON</span>
+          <span class="tech-desc">Primary Computation Engine</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">NUMERICAL COMPUTING</span>
+          <span class="tech-name">NUMPY</span>
+          <span class="tech-desc">High-Performance Vector Math</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">SIGNAL PROCESSING</span>
+          <span class="tech-name">SCIPY</span>
+          <span class="tech-desc">DSP & Spectral Analysis</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">API ENGINE</span>
+          <span class="tech-name">FASTAPI</span>
+          <span class="tech-desc">Async High-Speed Backend</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">SERVER RUNTIME</span>
+          <span class="tech-name">NODE.JS / EXPRESS</span>
+          <span class="tech-desc">Middleware & Microservices</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">FRONTEND FRAMEWORK</span>
+          <span class="tech-name">NEXT.JS</span>
+          <span class="tech-desc">UI Application Dashboard</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">MEDIA STORAGE</span>
+          <span class="tech-name">CLOUDINARY</span>
+          <span class="tech-desc">Asset & Cloud Processing</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-category">SIGNAL FORMAT</span>
+          <span class="tech-name">SIGMF</span>
+          <span class="tech-desc">Metadata & Capture Standard</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE SECTION -->
+    <section class="section" id="timeline">
+      <div class="section-label">// 06. ROADMAP</div>
+      <h2 class="section-heading">SIH HACKATHON TIMELINE</h2>
+
+      <div class="timeline-list">
+        <div class="timeline-item">
+          <div class="timeline-num">01</div>
+          <div class="timeline-content">
+            <div class="timeline-date">TBD</div>
+            <h3 class="timeline-title">IDEA SUBMISSION</h3>
+            <p class="timeline-desc">Initial technical proposal, system architecture definition, and submission.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-num">02</div>
+          <div class="timeline-content">
+            <div class="timeline-date">5TH SEPTEMBER 2026</div>
+            <h3 class="timeline-title">INTERNAL HACKATHON</h3>
+            <p class="timeline-desc">College-level evaluation, live prototype demonstration, and hackathon clearance.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-num">03</div>
+          <div class="timeline-content">
+            <div class="timeline-date">TBD</div>
+            <h3 class="timeline-title">GRAND FINALE</h3>
+            <p class="timeline-desc">National hackathon sprint, real-time evaluation, and final jury presentation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER SECTION -->
+  <footer class="footer">
+    <div class="footer-left">
+      <div class="footer-brand">ZERO TRACE INTEL</div>
+      <div class="footer-copy">SMART INDIA HACKATHON 2026 // ALL RIGHTS RESERVED</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://zero-trace-ruby.vercel.app" target="_blank" rel="noopener" id="live-prototype-link">[ LIVE PROTOTYPE ]</a>
+      <a href="https://github.com" target="_blank" rel="noopener" id="github-link">[ GITHUB REPO ]</a>
+      <a href="mailto:contact@zerotrace.intel" id="contact-link">[ CONTACT ]</a>
+      <a href="#" id="x-link">[ X.COM ]</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
