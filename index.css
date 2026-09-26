@@ -159,6 +159,7 @@ body {
   align-items: center;
   text-decoration: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .logo-link:hover {
@@ -174,8 +175,128 @@ body {
   display: block;
 }
 
+/* Three-part centered nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.2vw, 32px);
+  margin: 0 20px;
+}
+
+.nav-item {
+  position: relative;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 2px;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.nav-item .nav-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--red-neon);
+  box-shadow: 0 0 8px var(--red-neon);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--red-neon);
+  box-shadow: 0 0 8px var(--red-neon);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--red-neon);
+}
+
+.nav-item:hover::after {
+  transform: scaleX(0.6);
+}
+
+.nav-item.active {
+  color: #FFFFFF;
+}
+
+.nav-item.active .nav-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-item.active::after {
+  transform: scaleX(1);
+}
+
 .sih-tag {
   color: var(--text-secondary);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Mobile Hamburger Toggle Button */
+.mobile-nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 102;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.mobile-nav-toggle:hover {
+  border-color: var(--red-neon);
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.hamburger-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.25s ease;
+}
+
+.mobile-nav-toggle.active .hamburger-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+  background-color: var(--red-neon);
+}
+
+.mobile-nav-toggle.active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active .hamburger-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+  background-color: var(--red-neon);
 }
 
 /* ==========================================================================
@@ -822,8 +943,57 @@ body {
   .tech-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 900px) {
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(8, 8, 8, 0.96);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-glow);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 28px;
+    gap: 14px;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.9);
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-item {
+    font-size: 13px;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-item::after {
+    bottom: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .header, .hero-section, .section, .footer { padding-left: 24px; padding-right: 24px; }
   .team-grid, .tech-grid { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 1fr; gap: 16px; }
+}
+
+@media (max-width: 540px) {
+  .sih-tag {
+    display: none;
+  }
 }

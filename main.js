@@ -31,6 +31,9 @@ function initAnimations() {
 
   // 4. TECH STACK & TIMELINE STAGGER (Anime.js)
   setupStaggerAnimations();
+
+  // 5. NAVBAR NAVIGATION & SCROLL SPY
+  setupNavigation();
 }
 
 /**
@@ -350,6 +353,93 @@ function setupStaggerAnimations() {
 
     observer.observe(timelineList);
   }
+}
+
+/**
+ * Header Navigation & Scroll Spy
+ */
+function setupNavigation() {
+  const navContainer = document.getElementById("nav-links");
+  const navToggle = document.getElementById("mobile-nav-toggle");
+  const navItems = document.querySelectorAll(".nav-item");
+  const header = document.querySelector(".header");
+
+  if (!navContainer) return;
+
+  // 1. Mobile Menu Toggle
+  if (navToggle) {
+    navToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = navContainer.classList.toggle("open");
+      navToggle.classList.toggle("active", isOpen);
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (navContainer.classList.contains("open") && header && !header.contains(e.target)) {
+        navContainer.classList.remove("open");
+        navToggle.classList.remove("active");
+        navToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  // 2. Smooth Scrolling to Sections
+  navItems.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sectionId = item.getAttribute("href");
+      if (!sectionId || sectionId === "#") return;
+
+      const targetSection = document.querySelector(sectionId);
+      if (targetSection) {
+        const headerHeight = header ? header.offsetHeight : 70;
+        const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: "smooth"
+        });
+      }
+
+      // Close mobile menu after clicking link
+      if (navContainer.classList.contains("open")) {
+        navContainer.classList.remove("open");
+        if (navToggle) {
+          navToggle.classList.remove("active");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      }
+    });
+  });
+
+  // 3. Scroll Spy / Active State Indicator
+  const sectionIds = ["hero", "problem", "building", "team", "tech", "timeline"];
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  const onScroll = () => {
+    const scrollPos = window.pageYOffset + (header ? header.offsetHeight : 70) + 120;
+    let currentSectionId = "hero";
+
+    sections.forEach(section => {
+      if (scrollPos >= section.offsetTop) {
+        currentSectionId = section.id;
+      }
+    });
+
+    navItems.forEach(item => {
+      const sectionAttr = item.getAttribute("data-section");
+      if (sectionAttr === currentSectionId) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 }
 
 // Execute initialization
