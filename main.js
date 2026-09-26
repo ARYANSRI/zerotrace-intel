@@ -142,24 +142,30 @@ function setupHeroAnimation() {
   const heroTitle = document.getElementById("hero-title");
   if (!heroTitle) return;
 
-  // Split title text into character spans
-  const rawText = heroTitle.textContent.trim();
+  // Render separate word spans for "ZERO", "TRACE", "INTEL"
+  const words = ["ZERO", "TRACE", "INTEL"];
   heroTitle.innerHTML = "";
   
   const chars = [];
-  for (let i = 0; i < rawText.length; i++) {
-    const char = rawText[i];
-    const span = document.createElement("span");
-    if (char === " ") {
-      span.className = "space";
-      span.innerHTML = "&nbsp;";
-    } else {
-      span.className = "char";
-      span.textContent = char;
-      chars.push(span);
+  words.forEach((wordText, wIndex) => {
+    const wordSpan = document.createElement("span");
+    wordSpan.className = "word";
+
+    for (let i = 0; i < wordText.length; i++) {
+      const charSpan = document.createElement("span");
+      charSpan.className = "char";
+      charSpan.textContent = wordText[i];
+      wordSpan.appendChild(charSpan);
+      chars.push(charSpan);
     }
-    heroTitle.appendChild(span);
-  }
+
+    heroTitle.appendChild(wordSpan);
+
+    if (wIndex < words.length - 1) {
+      const spaceNode = document.createTextNode(" ");
+      heroTitle.appendChild(spaceNode);
+    }
+  });
 
   // Master Hero Timeline
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
