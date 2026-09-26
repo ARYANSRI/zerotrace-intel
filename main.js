@@ -17,8 +17,11 @@ function initAnimations() {
     console.log("ScrollTrigger Registered.");
   }
 
-  // 1. HERO ANIMATION (GSAP Timeline)
-  setupHeroAnimation();
+  // 1. PRELOADER OVERLAY & HERO SEQUENCING
+  setupPreloader(() => {
+    // Hero entrance animation runs only after preloader finishes exit
+    setupHeroAnimation();
+  });
 
   // 2. HOW IT WORKS PIPELINE (GSAP ScrollTrigger Step-by-Step Focus)
   setupPipelineAnimation();
@@ -28,6 +31,107 @@ function initAnimations() {
 
   // 4. TECH STACK & TIMELINE STAGGER (Anime.js)
   setupStaggerAnimations();
+}
+
+/**
+ * Preloader Animation
+ * Multilingual cycling greetings + crimson progress indicator
+ */
+function setupPreloader(onCompleteCallback) {
+  const preloader = document.getElementById("preloader");
+  const fillEl = document.getElementById("preloader-fill");
+  const counterEl = document.getElementById("preloader-counter");
+  const wordEls = preloader ? preloader.querySelectorAll(".preloader-word") : [];
+
+  if (!preloader || !wordEls.length || typeof gsap === "undefined") {
+    if (typeof onCompleteCallback === "function") onCompleteCallback();
+    return;
+  }
+
+  let isTimelineFinished = false;
+  let isWindowLoaded = (document.readyState === "complete");
+
+  const exitPreloader = () => {
+    gsap.to(preloader, {
+      opacity: 0,
+      scale: 1.05,
+      duration: 0.6,
+      ease: "power3.inOut",
+      onComplete: () => {
+        preloader.style.display = "none";
+        if (typeof onCompleteCallback === "function") {
+          onCompleteCallback();
+        }
+      }
+    });
+  };
+
+  const tryExit = () => {
+    if (isTimelineFinished && isWindowLoaded) {
+      exitPreloader();
+    }
+  };
+
+  if (!isWindowLoaded) {
+    window.addEventListener("load", () => {
+      isWindowLoaded = true;
+      tryExit();
+    });
+  }
+
+  // Build GSAP Timeline for word cycle + progress
+  const mainTl = gsap.timeline({
+    onComplete: () => {
+      isTimelineFinished = true;
+      tryExit();
+    }
+  });
+
+  const stepIn = 0.25;
+  const stepHold = 0.12;
+  const stepOut = 0.25;
+  const totalDuration = wordEls.length * (stepIn + stepHold + stepOut);
+
+  // Progress Bar & Counter Animation
+  if (fillEl) {
+    mainTl.to(fillEl, {
+      scaleX: 1,
+      duration: totalDuration,
+      ease: "none"
+    }, 0);
+  }
+
+  if (counterEl) {
+    const counterObj = { val: 0 };
+    mainTl.to(counterObj, {
+      val: 100,
+      duration: totalDuration,
+      ease: "none",
+      onUpdate: () => {
+        counterEl.textContent = `${Math.floor(counterObj.val)}%`;
+      }
+    }, 0);
+  }
+
+  // Word Animation Sequence across all 8 language elements
+  let currentTime = 0;
+  wordEls.forEach((el) => {
+    mainTl.fromTo(
+      el,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: stepIn, ease: "power2.out", immediateRender: false },
+      currentTime
+    );
+
+    const fadeOutStart = currentTime + stepIn + stepHold;
+    mainTl.to(
+      el,
+      { opacity: 0, y: -20, duration: stepOut, ease: "power2.in" },
+      fadeOutStart
+    );
+
+    currentTime += stepIn + stepHold + stepOut;
+  });
 }
 
 /**
@@ -112,40 +216,80 @@ function setupPipelineAnimation() {
 }
 
 /**
- * Team Grid Interactivity (Motion One + Spring Physics)
+ * Team Grid Interactivity (GSAP 3D Card Flip Engine)
  */
 function setupTeamGridAnimations() {
   const cards = document.querySelectorAll(".team-member-item");
+  let activeFlippedCard = null;
 
   cards.forEach((card) => {
+    const inner = card.querySelector(".team-card-inner");
+    if (!inner) return;
+
+    card._isFlipped = false;
+
+    const toggleFlip = (e) => {
+      // Allow social link clicks to proceed without triggering card flip
+      if (e.target.closest("a")) return;
+
+      e.preventDefault();
+
+      // If another card is already flipped, flip it back first
+      if (activeFlippedCard && activeFlippedCard !== card) {
+        const prevInner = activeFlippedCard.querySelector(".team-card-inner");
+        if (prevInner) {
+          const prevTl = gsap.timeline({ defaults: { duration: 0.6, ease: "power2.inOut" } });
+          prevTl.to(prevInner, { rotateY: 0 }, 0)
+                .to(prevInner, { scale: 1.03, duration: 0.3 }, 0)
+                .to(prevInner, { scale: 1, duration: 0.3 }, 0.3);
+          activeFlippedCard._isFlipped = false;
+        }
+        activeFlippedCard = null;
+      }
+
+      const nextState = !card._isFlipped;
+      card._isFlipped = nextState;
+
+      const flipTl = gsap.timeline({ defaults: { duration: 0.6, ease: "power2.inOut" } });
+
+      if (nextState) {
+        activeFlippedCard = card;
+        flipTl.to(inner, { rotateY: 180 }, 0)
+              .to(inner, { scale: 1.03, duration: 0.3 }, 0)
+              .to(inner, { scale: 1, duration: 0.3 }, 0.3);
+      } else {
+        activeFlippedCard = null;
+        flipTl.to(inner, { rotateY: 0 }, 0)
+              .to(inner, { scale: 1.03, duration: 0.3 }, 0)
+              .to(inner, { scale: 1, duration: 0.3 }, 0.3);
+      }
+    };
+
     const handleEnter = () => {
-      card.classList.add("active-hover");
-      gsap.to(card, {
-        scale: 1.05,
-        y: -10,
-        boxShadow: "0 20px 40px rgba(255, 0, 0, 0.35)",
-        borderColor: "#FF0000",
-        duration: 0.3,
-        ease: "power2.out"
-      });
+      if (!card._isFlipped) {
+        gsap.to(inner, {
+          scale: 1.03,
+          y: -6,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      }
     };
 
     const handleLeave = () => {
-      card.classList.remove("active-hover");
-      gsap.to(card, {
-        scale: 1.0,
-        y: 0,
-        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.6)",
-        borderColor: "rgba(255, 0, 0, 0.22)",
-        duration: 0.3,
-        ease: "power2.out"
-      });
+      if (!card._isFlipped) {
+        gsap.to(inner, {
+          scale: 1.0,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      }
     };
 
+    card.addEventListener("click", toggleFlip);
     card.addEventListener("mouseenter", handleEnter);
     card.addEventListener("mouseleave", handleLeave);
-    card.addEventListener("touchstart", handleEnter, { passive: true });
-    card.addEventListener("touchend", handleLeave, { passive: true });
   });
 }
 
